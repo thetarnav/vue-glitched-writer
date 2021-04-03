@@ -10,12 +10,21 @@ export default Vue.extend({
 	data() {
 		return {
 			input: '',
-			text: 'Yoo',
+			text: 'Okay',
+			options: {
+				html: true,
+				letterize: true,
+				step: [0, 10],
+				initialDelay: [500, 2000],
+			},
 		}
 	},
 	methods: {
 		setText() {
 			this.text = this.input
+		},
+		log(what: string) {
+			console.log(what)
 		},
 	},
 })
@@ -23,8 +32,17 @@ export default Vue.extend({
 
 <template>
 	<div id="app">
-		<glitched-writer :text="text"></glitched-writer>
-		<input type="text" v-bind="input" />
-		<button @click="setText">Set Text</button>
+		<form>
+			<input type="text" v-model="input" />
+			<button type="submit" @click.prevent="setText">Set Text</button>
+		</form>
+		<br />
+		<glitched-writer
+			:text="text"
+			:options="options"
+			appear
+			@step="log('STEP')"
+			@finish="log('FINISH')"
+		></glitched-writer>
 	</div>
 </template>

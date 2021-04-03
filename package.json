@@ -1,7 +1,14 @@
 {
   "name": "vue-glitched-writer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Vue.js component module. A simple vue wrapper for Glitched Writer text-writing js module.",
+  "author": "Damian Tarnawski @thetarnav <gthetarnav@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thetarnav/vue-glitched-writer.git"
+  },
+  "homepage": "https://github.com/thetarnav/vue-glitched-writer#readme",
   "main": "dist/glitched-writer.ssr.js",
   "browser": "dist/glitched-writer.esm.js",
   "module": "dist/glitched-writer.esm.js",
