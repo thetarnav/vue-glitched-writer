@@ -1,6 +1,6 @@
 {
   "name": "vue-glitched-writer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue.js component module. A simple vue wrapper for Glitched Writer text-writing js module.",
   "author": "Damian Tarnawski @thetarnav <gthetarnav@gmail.com>",
   "license": "MIT",
