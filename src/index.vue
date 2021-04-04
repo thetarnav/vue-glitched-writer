@@ -1,16 +1,17 @@
 <script lang="ts">
 import Vue from 'vue'
-import GlitchedWriter, { // <-- GlitchedWriter class
-	WriterDataResponse, // <-- Type of response in callbacks
-	glitchWrite, // <-- One time write funcion
-	presets, // <-- Object with all prepared presets of options
-	glyphs, // <-- Same but for glyph charsets
-	wait, // <-- Ulitity async function, that can be used to wait some time
+import GlitchedWriter, {
+	WriterDataResponse,
+	glitchWrite,
+	presets,
+	glyphs,
+	wait,
+	ConstructorOptions,
 } from 'glitched-writer'
 export { GlitchedWriter, glitchWrite, presets, glyphs, wait }
 
 export default /*#__PURE__*/ Vue.extend({
-	name: 'GlitchedWriter', // vue component name
+	name: 'GlitchedWriter',
 	props: {
 		text: {
 			type: String,
@@ -39,6 +40,14 @@ export default /*#__PURE__*/ Vue.extend({
 		text(text: string) {
 			this.writer.write(text)
 		},
+		options(options: ConstructorOptions) {
+			console.log('NEW OPTIONS', options)
+
+			this.writer.extendOptions(options)
+		},
+		pause(paused: boolean) {
+			paused ? this.writer.pause() : this.writer.play()
+		},
 	},
 	methods: {
 		setTextContent(text: string): void {
@@ -64,6 +73,7 @@ export default /*#__PURE__*/ Vue.extend({
 		if (this.appear) {
 			this.setTextContent('')
 			this.writer.write(this.text)
+			this.pause && this.writer.pause()
 		}
 	},
 })

@@ -1,6 +1,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import GlitchedWriter from '@/index.vue'
+import { ConstructorOptions } from 'vue-glitched-writer'
 
 export default Vue.extend({
 	name: 'ServeDev',
@@ -14,9 +15,10 @@ export default Vue.extend({
 			options: {
 				html: true,
 				letterize: true,
-				step: [0, 10],
+				steps: [0, 10],
 				initialDelay: [500, 2000],
-			},
+			} as ConstructorOptions,
+			pause: false,
 		}
 	},
 	methods: {
@@ -25,6 +27,14 @@ export default Vue.extend({
 		},
 		log(what: string) {
 			console.log(what)
+		},
+		changeOptions() {
+			this.options = {
+				html: false,
+				letterize: true,
+				steps: [0, 10],
+				initialDelay: [500, 2000],
+			}
 		},
 	},
 })
@@ -36,10 +46,12 @@ export default Vue.extend({
 			<input type="text" v-model="input" />
 			<button type="submit" @click.prevent="setText">Set Text</button>
 		</form>
+		<button @click="changeOptions">Change Options</button>
 		<br />
 		<glitched-writer
 			:text="text"
 			:options="options"
+			:pause="pause"
 			appear
 			@step="log('STEP')"
 			@finish="log('FINISH')"

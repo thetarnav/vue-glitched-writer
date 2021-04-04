@@ -50,13 +50,17 @@ import GlitchedWriter from 'https://cdn.skypack.dev/vue-glitched-writer'
 </script>
 ```
 
-### Animate text on page load
+### Animate text instantly after load
+
+Will animate blank -> passed text property
 
 ```html
 <glitched-writer text="Your Content" appear />
 ```
 
 ### Write text dynamically
+
+Previous text -> new text
 
 ```html
 <glitched-writer :text="text" />
@@ -78,9 +82,11 @@ import GlitchedWriter from 'https://cdn.skypack.dev/vue-glitched-writer'
 }
 ```
 
-### Passing Options
+### Custom Options
 
-Right now options will be used only when creating component. So further changes to options won't have an effect.
+See [Glitched Writer's Option List](https://github.com/thetarnav/glitched-writer#customizing-behavior).
+
+#### **Passing options object to component.**
 
 ```js
 {
@@ -90,7 +96,7 @@ Right now options will be used only when creating component. So further changes 
          options: {
             html: true,
             letterize: true,
-            step: [0, 10],
+            steps: [0, 10],
             initialDelay: [500, 2000],
             glyphs: 'QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()1234567890'
          },
@@ -101,6 +107,45 @@ Right now options will be used only when creating component. So further changes 
 
 ```html
 <glitched-writer :text="text" :options="options" />
+```
+
+#### **Changing options later**
+
+When changing options object (passed to the component), you need to remember to reassign the object property, instead of modifying it.
+
+```js
+{
+   methods: {
+      changeOprions(){
+         // RIGHT
+         this.options = {
+            steps: [2, 15],
+            html: false
+         }
+
+         // WRONG: this.options.steps = [2, 15]
+      }
+   }
+}
+```
+
+### Pausing the animation
+
+The "pause" boolean property is responsible for programatic pausing.
+Simply set "pause" property to true if you want the animation to stop.
+
+```js
+{
+   data() {
+      return {
+         pause: true
+      }
+   },
+}
+```
+
+```html
+<glitched-writer :text="text" :pause="pause" />
 ```
 
 ### Component Events

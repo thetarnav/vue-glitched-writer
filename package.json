@@ -29,7 +29,7 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
-    "glitched-writer": "^2.0.19"
+    "glitched-writer": "^2.0.20"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
