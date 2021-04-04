@@ -13,6 +13,7 @@
   "browser": "dist/glitched-writer.esm.js",
   "module": "dist/glitched-writer.esm.js",
   "unpkg": "dist/glitched-writer.min.js",
+  "jsdelivr": "dist/glitched-writer.min.js",
   "types": "vue-glitched-writer.d.ts",
   "files": [
     "dist/*",
@@ -56,5 +57,18 @@
   },
   "engines": {
     "node": ">=12"
-  }
+  },
+  "keywords": [
+    "vue",
+    "glitch",
+    "text",
+    "decrypt",
+    "decode",
+    "scramble",
+    "animation",
+    "front-end",
+    "web",
+    "html",
+    "typewriter"
+  ]
 }
