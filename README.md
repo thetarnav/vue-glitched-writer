@@ -82,6 +82,17 @@ Previous text -> new text
 }
 ```
 
+### Using Presets
+
+[List of available presets](https://github.com/thetarnav/glitched-writer#presets).
+
+```html
+<glitched-writer text="Your Text" preset="zalgo" />
+
+<!-- Passing options prop will extend the preset -->
+<glitched-writer text="Your Text" preset="zalgo" :options="{ html: true }" />
+```
+
 ### Custom Options
 
 See [Glitched Writer's Option List](https://github.com/thetarnav/glitched-writer#customizing-behavior).
