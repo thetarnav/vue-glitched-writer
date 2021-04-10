@@ -25,6 +25,10 @@ export default /*#__PURE__*/ Vue.extend({
 			type: Object,
 			default: () => {},
 		},
+		preset: {
+			type: String,
+			default: 'default',
+		},
 	},
 	data() {
 		return {
@@ -35,21 +39,31 @@ export default /*#__PURE__*/ Vue.extend({
 		appear(): boolean {
 			return typeof this.$attrs.appear !== 'undefined'
 		},
+		basePreset(): ConstructorOptions {
+			return presets[this.preset as keyof typeof presets] ?? {}
+		},
 	},
 	watch: {
 		text(text: string) {
 			this.writer.write(text)
 		},
-		options(options: ConstructorOptions) {
-			console.log('NEW OPTIONS', options)
-
-			this.writer.extendOptions(options)
+		options() {
+			this.setOptions()
+		},
+		preset() {
+			this.setOptions()
 		},
 		pause(paused: boolean) {
 			paused ? this.writer.pause() : this.writer.play()
 		},
 	},
 	methods: {
+		setOptions() {
+			this.writer.setOptions({
+				...this.basePreset,
+				...this.options,
+			})
+		},
 		setTextContent(text: string): void {
 			if (this.writer.options.html) this.$el.innerHTML = text
 			else this.$el.textContent = text

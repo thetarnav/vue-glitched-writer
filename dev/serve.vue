@@ -19,6 +19,7 @@ export default Vue.extend({
 				initialDelay: [500, 2000],
 			} as ConstructorOptions,
 			pause: false,
+			preset: 'default',
 		}
 	},
 	methods: {
@@ -36,6 +37,9 @@ export default Vue.extend({
 				initialDelay: [500, 2000],
 			}
 		},
+		changePreset() {
+			this.preset = 'zalgo'
+		},
 	},
 })
 </script>
@@ -47,11 +51,13 @@ export default Vue.extend({
 			<button type="submit" @click.prevent="setText">Set Text</button>
 		</form>
 		<button @click="changeOptions">Change Options</button>
+		<button @click="changePreset">Change Preset</button>
 		<br />
 		<glitched-writer
 			:text="text"
 			:options="options"
 			:pause="pause"
+			:preset="preset"
 			appear
 			@step="log('STEP')"
 			@finish="log('FINISH')"
