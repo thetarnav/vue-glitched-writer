@@ -1,7 +1,7 @@
 {
   "name": "vue-glitched-writer",
   "version": "1.0.1",
-  "description": "Vue.js component module. A simple vue wrapper for Glitched Writer text-writing js module.",
+  "description": "Vue.js Single File Component. Wrapper for Glitched Writer: text-writing js module.",
   "author": "Damian Tarnawski @thetarnav <gthetarnav@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -26,7 +26,9 @@
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "prepublishOnly": "npm run build && npm version patch",
+    "postpublish": "git push && git push --tags"
   },
   "dependencies": {
     "glitched-writer": "^2.0.21"
