@@ -2,13 +2,9 @@
 import Vue from 'vue'
 import GlitchedWriter, {
 	WriterDataResponse,
-	glitchWrite,
 	presets,
-	glyphs,
-	wait,
 	ConstructorOptions,
 } from 'glitched-writer'
-export { GlitchedWriter, glitchWrite, presets, glyphs, wait }
 
 export default /*#__PURE__*/ Vue.extend({
 	name: 'GlitchedWriter',
@@ -44,8 +40,8 @@ export default /*#__PURE__*/ Vue.extend({
 		},
 	},
 	watch: {
-		text(text: string) {
-			this.writer.write(text)
+		text() {
+			this.write()
 		},
 		options() {
 			this.setOptions()
@@ -71,22 +67,23 @@ export default /*#__PURE__*/ Vue.extend({
 		step(string: string, writerData?: WriterDataResponse) {
 			this.$emit('step', string, writerData)
 		},
-		finish(string: string, writerData?: WriterDataResponse) {
+		finish() {
+			if (this.pause) return
+			const { string, writerData } = this.writer
 			this.$emit('finish', string, writerData)
+		},
+		async write() {
+			await this.writer.write(this.text)
+			this.finish()
 		},
 	},
 	mounted() {
-		this.writer = new GlitchedWriter(
-			this.$el,
-			this.options,
-			this.step,
-			this.finish,
-		)
+		this.writer = new GlitchedWriter(this.$el, this.options, this.step)
 		this.setTextContent(this.text)
 
 		if (this.appear) {
 			this.setTextContent('')
-			this.writer.write(this.text)
+			this.write()
 			this.pause && this.writer.pause()
 		}
 	},
