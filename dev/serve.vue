@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import GlitchedWriter from '@/glitched-writer.vue'
+import GlitchedWriter, { wait } from '@/glitched-writer.vue'
 import { ConstructorOptions } from '../glitched-writer'
 
 export default defineComponent({
@@ -17,9 +17,16 @@ export default defineComponent({
 				letterize: true,
 				steps: [0, 10],
 				initialDelay: [500, 2000],
+				startFrom: 'erase',
 			} as ConstructorOptions,
 			pause: false,
 			preset: 'default',
+			texts: [
+				'Hello and Welcome',
+				'to the great erase test',
+				'will it work here?',
+			],
+			index: -1,
 		}
 	},
 	methods: {
@@ -31,14 +38,21 @@ export default defineComponent({
 		},
 		changeOptions() {
 			this.options = {
-				html: false,
-				letterize: true,
+				html: true,
 				steps: [0, 10],
 				initialDelay: [500, 2000],
 			}
 		},
 		changePreset() {
 			this.preset = 'zalgo'
+		},
+		async afterFinish() {
+			console.log('Yooo')
+
+			await wait(1000)
+			this.index++
+			if (this.index >= this.texts.length) this.index = 0
+			this.text = this.texts[this.index]
 		},
 	},
 })
@@ -60,7 +74,7 @@ export default defineComponent({
 			:preset="preset"
 			appear
 			@step="log('STEP')"
-			@finish="log('FINISH')"
+			@finish="afterFinish"
 		></glitched-writer>
 	</div>
 </template>
