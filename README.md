@@ -26,6 +26,14 @@ Download and install with npm.
 npm i vue-glitched-writer
 ```
 
+For **Vue 3**:
+
+```bash
+npm i vue-glitched-writer@next
+```
+
+Import inside the script tag.
+
 ```js
 import GlitchedWriter from 'vue-glitched-writer'
 ```
@@ -185,21 +193,6 @@ Glitched Writer emits event on every **step** and writing **finish**.
 // 	message?: string
 // 	error?: any
 // }
-```
-
-### Available Imports
-
-```ts
-import GlitchedWriter, { // <-- Vue component
-	GlitchedWriter, // <-- GlitchedWriter class
-	ConstructorOptions, // <-- Options type
-	Callback, // <-- Callback type
-	WriterDataResponse, // <-- Type of response in callbacks
-	glitchWrite, // <-- One time write funcion
-	presets, // <-- Object with all prepared presets of options
-	glyphs, // <-- Same but for glyph charsets
-	wait, // <-- Ulitity async function, that can be used to wait some time
-} from 'vue-glitched-writer'
 ```
 
 ## More Information
