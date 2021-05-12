@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/thetarnav/vue-glitched-writer.git"
   },
-  "homepage": "https://github.com/thetarnav/vue-glitched-writer#readme",
+  "homepage": "https://glitched-writer.site/",
   "main": "dist/glitched-writer.ssr.js",
   "browser": "dist/glitched-writer.esm.js",
   "module": "dist/glitched-writer.esm.js",
@@ -25,7 +25,8 @@
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "deploy": "npm version patch && npm publish -tag next"
   },
   "dependencies": {
     "glitched-writer": "^2.0.22"
