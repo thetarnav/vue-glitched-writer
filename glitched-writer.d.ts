@@ -11,8 +11,8 @@ declare const GlitchedWriter: DefineComponent<{}, {}, any> & {
 export default GlitchedWriter
 
 export {
-	GlitchedWriterClass as GlitchedWriter,
-	ConstructorOptions,
+	GlitchedWriterClass,
+	ConstructorOptions as Options,
 	Callback,
-	WriterDataResponse,
+	WriterDataResponse as WriterData,
 }

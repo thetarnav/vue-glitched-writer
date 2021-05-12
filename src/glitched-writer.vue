@@ -3,12 +3,9 @@ import { defineComponent, computed, watch, onMounted, ref } from 'vue'
 import GlitchedWriter, {
 	WriterDataResponse,
 	presets,
-	glyphs,
-	wait,
 	ConstructorOptions,
 } from '../node_modules/glitched-writer'
 import { escapeHtml } from './utils'
-export { GlitchedWriter, presets, glyphs, wait }
 
 type WriterCallback = (string: string, data: WriterDataResponse) => void
 
@@ -34,6 +31,10 @@ export default defineComponent({
 		silent: {
 			type: Boolean,
 			default: true,
+		},
+		tag: {
+			type: String,
+			default: 'span',
 		},
 	},
 	setup(props, { emit, attrs }) {
@@ -120,5 +121,11 @@ export default defineComponent({
 </script>
 
 <template>
-	<span class="glitched-writer" ref="element" v-html="initialText"></span>
+	<component
+		:is="tag"
+		ref="element"
+		v-html="initialText"
+		class="glitched-writer"
+		:class="{ 'gw-paused': pause }"
+	></component>
 </template>
