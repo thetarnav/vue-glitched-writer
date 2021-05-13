@@ -26,7 +26,8 @@
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
-    "deploy": "npm version patch && npm publish -tag next"
+    "deploy": "npm version patch && npm publish -tag next",
+    "postpublish": "git push && git push --tags"
   },
   "dependencies": {
     "glitched-writer": "^2.0.24"
