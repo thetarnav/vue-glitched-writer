@@ -59,30 +59,20 @@ export default defineComponent({
 		 * Writer state callbacks:
 		 */
 		const onStep: WriterCallback = (string, data) =>
-			emit('step', string, data)
-		const callFinish = () => {
-			if (props.pause) return
-			const { string, writerData } = writer.value
-			emit('finish', string, writerData)
-		}
+				emit('step', string, data),
+			onFinish: WriterCallback = (string, data) =>
+				emit('finish', string, data)
 
-		async function write() {
+		function write() {
 			if (props.pause) return
-			await writer.value.write(props.text)
-			callFinish()
+			writer.value.write(props.text)
 		}
 		watch(() => props.text, write)
 
 		// Pause and Play
 		watch(
 			() => props.pause,
-			async pause => {
-				if (pause) writer.value.pause()
-				else {
-					await writer.value.play()
-					callFinish()
-				}
-			},
+			pause => (pause ? writer.value.pause() : writer.value.play()),
 		)
 
 		/**
@@ -94,6 +84,7 @@ export default defineComponent({
 				element.value,
 				computedOptions.value,
 				onStep,
+				onFinish,
 			)
 
 			// Write initial text if props.appear is true
