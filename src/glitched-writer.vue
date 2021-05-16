@@ -1,13 +1,10 @@
 <script lang="ts">
 import { defineComponent, computed, watch, onMounted, ref } from 'vue'
 import GlitchedWriter, {
-	WriterDataResponse,
 	presets,
-	ConstructorOptions,
+	Callback,
 } from '../node_modules/glitched-writer'
 import { escapeHtml } from './utils'
-
-type WriterCallback = (string: string, data: WriterDataResponse) => void
 
 export default defineComponent({
 	name: 'GlitchedWriter',
@@ -53,15 +50,13 @@ export default defineComponent({
 			...preset.value,
 			...props.options,
 		}))
-		watch(computedOptions, options => writer.value.setOptions(options))
+		watch(computedOptions, options => writer.value.options.set(options))
 
 		/**
 		 * Writer state callbacks:
 		 */
-		const onStep: WriterCallback = (string, data) =>
-				emit('step', string, data),
-			onFinish: WriterCallback = (string, data) =>
-				emit('finish', string, data)
+		const onStep: Callback = (string, data) => emit('step', string, data),
+			onFinish: Callback = (string, data) => emit('finish', string, data)
 
 		function write() {
 			if (props.pause) return
