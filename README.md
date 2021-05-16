@@ -68,26 +68,11 @@ Will animate blank -> passed text property
 
 ### Write text dynamically
 
-Previous text -> new text
+Animate each time the txt prop changes.
+_Previous text -> new text_
 
 ```html
 <glitched-writer :text="text" />
-```
-
-```js
-{
-   data() {
-      return {
-         text: 'Your dynamic text.'
-      }
-   },
-   mounted() {
-      setTimeout(() => {
-         this.text = 'Something new!'
-         // Glitched Writer will animate this text change
-      }, 3000)
-   }
-}
 ```
 
 ### Using Presets
@@ -116,7 +101,7 @@ See [Glitched Writer's Option List](https://github.com/thetarnav/glitched-writer
             html: true,
             letterize: true,
             steps: [0, 10],
-            initialDelay: [500, 2000],
+            delay: [500, 2000],
             glyphs: 'QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()1234567890'
          },
       }
@@ -139,7 +124,10 @@ When changing options object (passed to the component), you need to remember to 
          // RIGHT
          this.options = {
             steps: [2, 15],
-            html: false
+            html: false,
+
+            ...this.options
+            // destructure previous options to extend it
          }
 
          // WRONG: this.options.steps = [2, 15]
@@ -154,12 +142,10 @@ The "pause" boolean property is responsible for programatic pausing.
 Simply set "pause" property to true if you want the animation to stop.
 
 ```js
-{
-   data() {
-      return {
-         pause: true
-      }
-   },
+data() {
+   return {
+      pause: true
+   }
 }
 ```
 
@@ -193,6 +179,20 @@ Glitched Writer emits event on every **step** and writing **finish**.
 // 	message?: string
 // 	error?: any
 // }
+```
+
+### Accessing GlitchedWriter Instance
+
+If you want to do something custom with the component, you can use GlitchedWriter class instance attached to the html element.
+
+```html
+<glitched-writer :text="text" ref="el" />
+```
+
+```js
+mounted(){
+   console.log(this.$refs.el.$writer)
+}
 ```
 
 ## More Information
