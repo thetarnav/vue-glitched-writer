@@ -6,7 +6,7 @@
 
 ### What is [Glitched Writer](https://www.npmjs.com/package/glitched-writer):
 
-> **A lightweight, glitched, text writing module. Highly customizable settings. Decoding, decrypting, scrambling, and simply spelling out text.**
+> **A lightweight npm module for writing text to HTML elements. Highly customizable settings. Decoding, decrypting, scrambling, and simply spelling out text.**
 
 ### Vue component
 
