@@ -1,7 +1,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import GlitchedWriter from '@/index.vue'
-import { ConstructorOptions } from 'glitched-writer'
+import { CustomOptions } from '../node_modules/glitched-writer'
 
 export default Vue.extend({
 	name: 'ServeDev',
@@ -18,7 +18,7 @@ export default Vue.extend({
 				steps: [0, 10],
 				initialDelay: [500, 2000],
 				startFrom: 'erase',
-			} as ConstructorOptions,
+			} as CustomOptions,
 			pause: false,
 			preset: 'default',
 		}
@@ -35,7 +35,7 @@ export default Vue.extend({
 				html: false,
 				letterize: true,
 				steps: [0, 10],
-				initialDelay: [500, 2000],
+				delay: [500, 2000],
 			}
 		},
 		changePreset() {
