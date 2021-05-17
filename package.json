@@ -30,7 +30,7 @@
     "postpublish": "git push && git push --tags"
   },
   "dependencies": {
-    "glitched-writer": "^2.0.26"
+    "glitched-writer": "^2.0.27"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",

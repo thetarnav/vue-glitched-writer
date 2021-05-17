@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import GlitchedWriter, { wait } from '@/glitched-writer.vue'
-import { ConstructorOptions } from '../glitched-writer'
+import GlitchedWriter from '@/glitched-writer.vue'
+import { CustomOptions, wait } from '../node_modules/glitched-writer'
 
 export default defineComponent({
 	name: 'ServeDev',
@@ -16,9 +16,9 @@ export default defineComponent({
 				html: true,
 				letterize: true,
 				steps: [0, 10],
-				initialDelay: [500, 2000],
+				delay: [500, 2000],
 				startFrom: 'erase',
-			} as ConstructorOptions,
+			} as CustomOptions,
 			pause: false,
 			preset: 'default',
 			texts: [
@@ -40,11 +40,11 @@ export default defineComponent({
 			this.options = {
 				html: true,
 				steps: [0, 10],
-				initialDelay: [500, 2000],
+				delay: [500, 2000],
 			}
 		},
 		changePreset() {
-			this.preset = 'zalgo'
+			this.preset = 'cosmic'
 		},
 		async afterFinish() {
 			console.log('Yooo')
@@ -73,7 +73,7 @@ export default defineComponent({
 			:pause="pause"
 			:preset="preset"
 			appear
-			@step="log('STEP')"
+			@start="log('start')"
 			@finish="afterFinish"
 		></glitched-writer>
 	</div>
