@@ -60,7 +60,7 @@ export default Vue.extend({
 			:pause="pause"
 			:preset="preset"
 			appear
-			@step="log('STEP')"
+			@start="log('start')"
 			@finish="log('FINISH')"
 		></glitched-writer>
 	</div>

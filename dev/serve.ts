@@ -1,8 +1,10 @@
-import Vue, { VNode } from 'vue';
-import Dev from './serve.vue';
+import Vue, { VNode } from 'vue'
+import Dev from './serve.vue'
+import compositionApi from '@vue/composition-api'
 
-Vue.config.productionTip = false;
+Vue.use(compositionApi)
+Vue.config.productionTip = false
 
 new Vue({
-  render: (h): VNode => h(Dev),
-}).$mount('#app');
+	render: (h): VNode => h(Dev),
+}).$mount('#app')
