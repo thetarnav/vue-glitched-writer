@@ -1,5 +1,6 @@
 <script lang="ts">
-import {
+import Vue from 'vue'
+import compositionApi, {
 	defineComponent,
 	computed,
 	watch,
@@ -14,6 +15,7 @@ import GlitchedWriter, {
 	Callback,
 } from '../node_modules/glitched-writer'
 import { escapeHtml } from './utils'
+Vue.use(compositionApi)
 
 export {
 	presets,
