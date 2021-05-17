@@ -14,7 +14,7 @@
 
 ---
 
-### >>> [PLAYGROUND](https://glitched-writer.site) <<< | >>> [DEMOS](https://codepen.io/collection/XWVEEa) <<< | >>> [NPM](https://www.npmjs.com/package/glitched-writer) <<< | >>> [JS Module](https://www.npmjs.com/package/glitched-writer) <<<
+### >>> [PLAYGROUND](https://glitched-writer.site) <<< | >>> [EXAMPLES](https://codepen.io/collection/XWVEEa) <<< | >>> [VUE DEMO](https://codepen.io/thetarnav/pen/ExWgYer) <<< | >>> [JS Module](https://www.npmjs.com/package/glitched-writer) <<<
 
 ---
 
