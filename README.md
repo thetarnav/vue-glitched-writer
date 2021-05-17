@@ -155,17 +155,21 @@ data() {
 
 ### Component Events
 
-Glitched Writer emits event on every **step** and writing **finish**.
+Glitched Writer emits 3 events: on every **step** and writing **finish**.
+
+-  **start** - when writer starts writing
+-  **step** - on every step of writing process
+-  **finish** - when writer finishes writing
 
 ```html
-<glitched-writer :text="text" @step="method" @finish="method" />
+<glitched-writer @start="method" @step="method" @finish="method" />
 ```
 
 ```ts
 {
    methods: {
-      method(currentString: string, writerData: WriterDataResponse){
-         console.log(currentString, writerData.options)
+      method(text: string, data: WriterDataResponse){
+         console.log(text, data.options)
       }
    }
 }

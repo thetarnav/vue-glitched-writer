@@ -1,19 +1,28 @@
 <script lang="ts">
-import Vue from 'vue'
-import VueCompositionAPI, {
+import {
 	defineComponent,
 	computed,
 	watch,
 	onMounted,
 	ref,
 } from '@vue/composition-api'
-Vue.use(VueCompositionAPI)
 import GlitchedWriter, {
 	presets,
+	wait,
+	glyphs,
+	CustomOptions,
 	Callback,
 } from '../node_modules/glitched-writer'
 import { escapeHtml } from './utils'
 
+export {
+	presets,
+	wait,
+	glyphs,
+	CustomOptions,
+	Callback,
+	GlitchedWriter as GlitchedWriterClass,
+}
 export default defineComponent({
 	name: 'GlitchedWriter',
 	props: {
@@ -60,12 +69,6 @@ export default defineComponent({
 		}))
 		watch(computedOptions, options => writer.value.options.set(options))
 
-		/**
-		 * Writer state callbacks:
-		 */
-		const onStep: Callback = (string, data) => emit('step', string, data),
-			onFinish: Callback = (string, data) => emit('finish', string, data)
-
 		function write() {
 			if (props.pause) return
 			writer.value.write(props.text)
@@ -83,11 +86,16 @@ export default defineComponent({
 		 */
 		onMounted(() => {
 			// Set writer, after DOM is ready
-			writer.value = new GlitchedWriter(
-				element.value,
-				computedOptions.value,
-				onStep,
-				onFinish,
+			writer.value = new GlitchedWriter(element.value, computedOptions.value)
+
+			writer.value.addCallback('step', (string, data) =>
+				emit('step', string, data),
+			)
+			writer.value.addCallback('start', (string, data) =>
+				emit('start', string, data),
+			)
+			writer.value.addCallback('finish', (string, data) =>
+				emit('finish', string, data),
 			)
 
 			// Write initial text if props.appear is true
@@ -99,7 +107,7 @@ export default defineComponent({
 		 * but only when appear attribute isn't present
 		 * then it will animate initial text instead
 		 */
-		let initialText = ''
+		let initialText: string = ''
 		if (attrs.appear === undefined)
 			initialText = computedOptions.value.html
 				? props.text

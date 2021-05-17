@@ -16,7 +16,7 @@ export default Vue.extend({
 				html: true,
 				letterize: true,
 				steps: [0, 10],
-				initialDelay: [500, 2000],
+				delay: [500, 2000],
 				startFrom: 'erase',
 			} as CustomOptions,
 			pause: false,
