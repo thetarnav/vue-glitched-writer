@@ -38,7 +38,7 @@ Import inside the script tag.
 import GlitchedWriter from 'vue-glitched-writer'
 ```
 
-Or use [Skypack](https://www.skypack.dev/view/vue-glitched-writer) to import without need to install the package.
+Or use [Skypack](https://www.skypack.dev/view/vue-glitched-writer) to import without installing the package.
 
 ```js
 import GlitchedWriter from 'https://cdn.skypack.dev/vue-glitched-writer'
@@ -155,7 +155,7 @@ data() {
 
 ### Component Events
 
-Glitched Writer emits 3 events: on every **step** and writing **finish**.
+Glitched Writer emits 3 events:
 
 -  **start** - when writer starts writing
 -  **step** - on every step of writing process
