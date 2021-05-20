@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import GlitchedWriter from '@/glitched-writer.vue'
-import { CustomOptions, wait } from '../node_modules/glitched-writer'
+import { CustomOptions } from '../node_modules/glitched-writer'
 
 export default defineComponent({
 	name: 'ServeDev',
@@ -25,7 +25,7 @@ export default defineComponent({
 				'Hello and Welcome',
 				'to the great erase test',
 				'will it work here?',
-			],
+			] as string | string[],
 			index: -1,
 		}
 	},
@@ -49,10 +49,11 @@ export default defineComponent({
 		async afterFinish(string: string) {
 			console.log('Finished', string)
 
-			await wait(1000)
-			this.index++
-			if (this.index >= this.texts.length) this.index = 0
-			this.text = this.texts[this.index]
+			// await wait(1000)
+			// this.index++
+			// if (this.index >= this.texts.length) this.index = 0
+			// this.text = this.texts[this.index]
+			this.texts = 'TEST AFTER QUEUE'
 		},
 	},
 })
@@ -66,15 +67,18 @@ export default defineComponent({
 		</form>
 		<button @click="changeOptions">Change Options</button>
 		<button @click="changePreset">Change Preset</button>
+		<button @click="pause = !pause">
+			{{ pause ? 'RESUME' : 'PAUSE' }} Writer
+		</button>
 		<br />
 		<glitched-writer
-			:text="text"
+			:text="texts"
+			:queue="{ loop: afterFinish }"
 			:options="options"
 			:pause="pause"
 			:preset="preset"
-			appear
 			@start="log('start')"
-			@finish="afterFinish"
+			@finish="log"
 		></glitched-writer>
 	</div>
 </template>

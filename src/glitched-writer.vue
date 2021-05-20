@@ -21,20 +21,24 @@ export default defineComponent({
 	name: 'GlitchedWriter',
 	props: {
 		text: {
-			type: String,
+			type: [String, Array],
 			required: true,
 		},
 		pause: {
 			type: Boolean,
 			default: false,
 		},
+		preset: {
+			type: String,
+			default: 'default',
+		},
 		options: {
 			type: Object,
 			default: () => {},
 		},
-		preset: {
-			type: String,
-			default: 'default',
+		queue: {
+			type: Object,
+			default: () => {},
 		},
 		silent: {
 			type: Boolean,
@@ -51,6 +55,19 @@ export default defineComponent({
 			preset = computed(
 				// @ts-ignore
 				(): CustomOptions => presets[props.preset] ?? {},
+			),
+			writeOnAppear =
+				attrs.appear !== undefined ||
+				(typeof props.text === 'object' && props.text.length > 0),
+			queueInterval = computed(() =>
+				typeof props.queue?.interval === 'number'
+					? props.queue.interval
+					: undefined,
+			),
+			queueLoop = computed(() =>
+				['number', 'boolean', 'function'].includes(typeof props.queue?.loop)
+					? (props.queue.loop as Callback | boolean | number)
+					: undefined,
 			)
 
 		/**
@@ -63,9 +80,21 @@ export default defineComponent({
 		}))
 		watch(computedOptions, options => writer.value.options.set(options))
 
+		/**
+		 * WRITE function
+		 */
 		function write() {
 			if (props.pause) return
-			writer.value.write(props.text)
+
+			// For string text prop: simply write
+			if (typeof props.text === 'string') writer.value.write(props.text)
+			// For Array text prop:
+			// parse array items into strings
+			// and queue write that
+			else {
+				const texts = props.text.map(item => String(item))
+				writer.value.queueWrite(texts, queueInterval.value, queueLoop.value)
+			}
 		}
 		watch(() => props.text, write)
 
@@ -93,7 +122,7 @@ export default defineComponent({
 			)
 
 			// Write initial text if props.appear is true
-			attrs.appear !== undefined && write()
+			writeOnAppear && write()
 		})
 
 		/**
@@ -102,10 +131,13 @@ export default defineComponent({
 		 * then it will animate initial text instead
 		 */
 		let initialText: string = ''
-		if (attrs.appear === undefined)
-			initialText = computedOptions.value.html
-				? props.text
-				: escapeHtml(props.text)
+		if (attrs.appear === undefined) {
+			const text =
+				typeof props.text === 'string'
+					? props.text
+					: String(props.text[0] ?? '')
+			initialText = computedOptions.value.html ? text : escapeHtml(text)
+		}
 
 		return {
 			writer,
