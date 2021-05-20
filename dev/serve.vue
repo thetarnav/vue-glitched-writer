@@ -11,7 +11,11 @@ export default Vue.extend({
 	data() {
 		return {
 			input: '',
-			text: 'Okay',
+			text: [
+				'Hello and Welcome',
+				'to the great erase test',
+				'will it work here?',
+			] as string | string[],
 			options: {
 				html: true,
 				letterize: true,

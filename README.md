@@ -75,6 +75,39 @@ _Previous text -> new text_
 <glitched-writer :text="text" />
 ```
 
+### Queue Writing
+
+If you want to write texts for prepared array, then you can pass that array to as `text` and glitched writer will turn it into a working queue.
+
+```js
+data() {
+   return {
+      phrases: [
+				'Hello and Welcome',
+				'What is this?!',
+				'It appears i\'m in some queue...',
+      ]
+   }
+}
+```
+
+```html
+<glitched-writer :text="phrases" />
+
+<!-- add prop "queue" to controll the queue -->
+<glitched-writer
+	:text="phrases"
+	:queue="{
+      interval: 1200, // [ms]
+      loop: true
+      // false -> stop (default)
+      // true -> continue looping
+      // Function -> stop and fire the function.
+      // Number -> wait number ms and continue looping
+   }"
+/>
+```
+
 ### Using Presets
 
 [List of available presets](https://github.com/thetarnav/glitched-writer#presets).

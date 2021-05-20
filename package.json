@@ -31,11 +31,11 @@
     "postpublish": "git push && git push --tags"
   },
   "dependencies": {
-    "@vue/composition-api": "^1.0.0-rc.8",
-    "glitched-writer": "^2.0.27"
+    "@vue/composition-api": "^1.0.0-rc.9",
+    "glitched-writer": "^2.0.29"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.2",
+    "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-typescript": "^7.12.7",
     "@rollup/plugin-alias": "^3.1.1",
