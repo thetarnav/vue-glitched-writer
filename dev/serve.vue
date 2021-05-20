@@ -46,8 +46,8 @@ export default defineComponent({
 		changePreset() {
 			this.preset = 'cosmic'
 		},
-		async afterFinish() {
-			console.log('Yooo')
+		async afterFinish(string: string) {
+			console.log('Finished', string)
 
 			await wait(1000)
 			this.index++

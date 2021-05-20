@@ -50,7 +50,7 @@ export default defineComponent({
 			element = ref(null as null | HTMLElement),
 			preset = computed(
 				// @ts-ignore
-				(): ConstructorOptions => presets[props.preset] ?? {},
+				(): CustomOptions => presets[props.preset] ?? {},
 			)
 
 		/**
