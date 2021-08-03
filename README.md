@@ -20,11 +20,15 @@
 
 ## Installation
 
-Download and install with npm.
-Works for both **Vue 2** and **Vue 3**!
+Download and install with npm. For **Vue 3**:
 
 ```bash
 npm i vue-glitched-writer
+```
+
+**Vue 2**:
+```bash
+npm i vue-glitched-writer@1.0.8
 ```
 
 Import inside the script tag.
