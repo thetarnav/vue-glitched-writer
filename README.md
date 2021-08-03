@@ -148,14 +148,12 @@ When changing options object (passed to the component), you need to remember to 
 ```js
 {
    methods: {
-      changeOprions(){
+      changeOptions(){
          // RIGHT
          this.options = {
             steps: [2, 15],
             html: false,
-
             ...this.options
-            // destructure previous options to extend it
          }
 
          // WRONG: this.options.steps = [2, 15]
@@ -190,13 +188,13 @@ Glitched Writer emits 3 events:
 -  **finish** - when writer finishes writing
 
 ```html
-<glitched-writer @start="method" @step="method" @finish="method" />
+<glitched-writer @start="method" @step="callback" @finish="callback" />
 ```
 
 ```ts
 {
    methods: {
-      method(text: string, data: WriterDataResponse){
+      callback(text, data){
          console.log(text, data.options)
       }
    }
