@@ -1,8 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import GlitchedWriter from '@/vue-glitched-writer.vue'
-// // @ts-ignore
+// @ts-ignore
 // import GlitchedWriter from '../dist/vue-glitched-writer.esm.js'
+
+console.log(GlitchedWriter)
 
 export default defineComponent({
 	name: 'HelloWorld',

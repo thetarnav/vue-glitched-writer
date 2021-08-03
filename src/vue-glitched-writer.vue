@@ -1,11 +1,13 @@
 <script lang="ts">
 import { defineComponent, computed, watch, onMounted, ref } from 'vue-demi'
-import GlitchedWriter, {
+import GlitchedWriterClass, {
 	presets,
 	wait,
 	glyphs,
 	CustomOptions,
 	Callback,
+	create,
+	WriterDataResponse,
 } from 'glitched-writer'
 import { escapeHtml } from './utils'
 
@@ -15,11 +17,12 @@ export {
 	glyphs,
 	CustomOptions,
 	Callback,
-	GlitchedWriter as GlitchedWriterClass,
+	GlitchedWriterClass,
+	WriterDataResponse,
 }
 
 export default defineComponent({
-	name: 'GlitchedWriter',
+	name: 'VueGlitchedWriter',
 	props: {
 		text: {
 			type: [String, Array],
@@ -51,7 +54,7 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit, attrs }) {
-		const writer = ref((null as unknown) as GlitchedWriter),
+		const writer = ref((null as unknown) as GlitchedWriterClass),
 			element = ref(null as null | HTMLElement),
 			preset = computed(
 				// @ts-ignore
@@ -110,7 +113,7 @@ export default defineComponent({
 		 */
 		onMounted(() => {
 			// Set writer, after DOM is ready
-			writer.value = new GlitchedWriter(element.value, computedOptions.value)
+			writer.value = create(element.value, computedOptions.value)
 
 			writer.value.addCallback('step', (string, data) =>
 				emit('step', string, data),
