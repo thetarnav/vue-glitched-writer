@@ -2,24 +2,11 @@
 import { defineComponent, computed, watch, onMounted, ref } from 'vue-demi'
 import GlitchedWriterClass, {
 	presets,
-	wait,
-	glyphs,
 	CustomOptions,
 	Callback,
 	create,
-	WriterDataResponse,
 } from 'glitched-writer'
 import { escapeHtml } from './utils'
-
-export {
-	presets,
-	wait,
-	glyphs,
-	CustomOptions,
-	Callback,
-	GlitchedWriterClass,
-	WriterDataResponse,
-}
 
 export default defineComponent({
 	name: 'VueGlitchedWriter',

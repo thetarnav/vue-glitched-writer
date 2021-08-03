@@ -1,15 +1,15 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import GlitchedWriter from '@/vue-glitched-writer.vue'
+// import GlitchedWriter from '@/vue-glitched-writer.vue'
 // @ts-ignore
-// import GlitchedWriter from '../dist/vue-glitched-writer.esm.js'
+import * as gw from '../dist/vue-glitched-writer.esm.js'
 
-console.log(GlitchedWriter)
+console.log(gw)
 
 export default defineComponent({
 	name: 'HelloWorld',
 	components: {
-		GlitchedWriter,
+		GlitchedWriter: gw.default,
 	},
 	setup() {
 		const paragraph = `
