@@ -1,71 +1,102 @@
 <script lang="ts">
-import Vue from 'vue'
-import GlitchedWriter from '@/index.vue'
-import { CustomOptions } from '../node_modules/glitched-writer'
+import { defineComponent, ref } from 'vue'
+// import GlitchedWriter from '@/vue-glitched-writer.vue'
+// @ts-ignore
+import * as gw from '../dist/vue-glitched-writer.esm.js'
 
-export default Vue.extend({
-	name: 'ServeDev',
+console.log(gw)
+
+export default defineComponent({
+	name: 'HelloWorld',
 	components: {
-		GlitchedWriter,
+		GlitchedWriter: gw.default,
 	},
-	data() {
+	setup() {
+		const paragraph = `
+		For a guide and recipes on how to configure / customize this project, <br/>
+      check out the <a href="https://github.com/thetarnav/vue-glitched-writer" target="_blank">vue glitched writer repo</a>.`,
+			texts = [
+				'First Text Of The Queue.',
+				'Second Item of the Queue!',
+				'Next up is...',
+				'THE LAST ONE',
+			]
+
+		const inputText = ref('Welcome to Vue Glitched Writer!')
+
 		return {
-			input: '',
-			text: [
-				'Hello and Welcome',
-				'to the great erase test',
-				'will it work here?',
-			] as string | string[],
-			options: {
-				html: true,
-				letterize: true,
-				steps: [0, 10],
-				delay: [500, 2000],
-				startFrom: 'erase',
-			} as CustomOptions,
-			pause: false,
-			preset: 'default',
+			paragraph,
+			texts,
+			inputText,
 		}
-	},
-	methods: {
-		setText() {
-			this.text = this.input
-		},
-		log(what: string) {
-			console.log(what)
-		},
-		changeOptions() {
-			this.options = {
-				html: false,
-				letterize: true,
-				steps: [0, 10],
-				delay: [500, 2000],
-			}
-		},
-		changePreset() {
-			this.preset = 'zalgo'
-		},
 	},
 })
 </script>
 
 <template>
 	<div id="app">
-		<form>
-			<input type="text" v-model="input" />
-			<button type="submit" @click.prevent="setText">Set Text</button>
-		</form>
-		<button @click="changeOptions">Change Options</button>
-		<button @click="changePreset">Change Preset</button>
-		<br />
-		<glitched-writer
-			:text="text"
-			:options="options"
-			:pause="pause"
-			:preset="preset"
+		<GlitchedWriter
+			tag="h1"
+			:text="inputText"
+			:options="{ letterize: true }"
 			appear
-			@start="log('start')"
-			@finish="log('FINISH')"
-		></glitched-writer>
+			class="text"
+		/>
+		<GlitchedWriter
+			tag="p"
+			:text="paragraph"
+			:options="{ html: true }"
+			appear
+			class="paragraph"
+		/>
+		<GlitchedWriter
+			tag="p"
+			:text="texts"
+			:queue="{
+				loop: true,
+			}"
+			preset="encrypted"
+			:options="{ letterize: true }"
+			appear
+			class="queue-text"
+		/>
+
+		<input class="input" v-model.lazy="inputText" />
 	</div>
 </template>
+
+<style lang="scss" src="./style.scss" />
+
+<style lang="scss">
+#app {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: white;
+
+	> * {
+		margin: 20px auto;
+	}
+}
+
+.paragraph {
+	font-family: monospace;
+}
+
+.queue-text {
+	font-family: monospace;
+	will-change: contents, width;
+	font-size: 2rem;
+
+	.gw-char:not(.gw-finished) {
+		.gw-ghosts {
+			opacity: 0.5;
+		}
+	}
+	.gw-glitched {
+		opacity: 0.5;
+	}
+}
+</style>
