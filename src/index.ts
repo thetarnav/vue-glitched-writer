@@ -1,15 +1,9 @@
-<script lang="ts">
-import { defineComponent, computed, watch, onMounted, ref } from 'vue-demi'
-import GlitchedWriterClass, {
-	presets,
-	CustomOptions,
-	Callback,
-	create,
-} from 'glitched-writer'
+import { defineComponent, computed, watch, onMounted, ref, h } from 'vue-demi'
+import GlitchedWriterClass, { presets, CustomOptions, Callback, create } from 'glitched-writer'
 import { escapeHtml } from './utils'
 
-export default defineComponent({
-	name: 'VueGlitchedWriter',
+const component = defineComponent({
+	name: 'GlitchedWriter',
 	props: {
 		text: {
 			type: [String, Array],
@@ -41,25 +35,23 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit, attrs }) {
-		const writer = ref((null as unknown) as GlitchedWriterClass),
-			element = ref(null as null | HTMLElement),
+		const writer = ref<GlitchedWriterClass>(),
+			element = ref<HTMLElement>(),
 			preset = computed(
 				// @ts-ignore
 				(): CustomOptions => presets[props.preset] ?? {},
 			),
 			writeOnAppear =
-				attrs.appear !== undefined ||
-				(typeof props.text === 'object' && props.text.length > 0),
+				attrs.appear !== undefined || (typeof props.text === 'object' && props.text.length > 0),
 			queueInterval = computed(() =>
-				typeof props.queue?.interval === 'number'
-					? props.queue.interval
-					: undefined,
+				typeof props.queue?.interval === 'number' ? props.queue.interval : undefined,
 			),
 			queueLoop = computed(() =>
 				['number', 'boolean', 'function'].includes(typeof props.queue?.loop)
 					? (props.queue.loop as Callback | boolean | number)
 					: undefined,
 			)
+		const classes = computed(() => ('glitched-writer' + props.pause ? ' gw-paused' : ''))
 
 		/**
 		 * Options will react to preset and options props change
@@ -69,7 +61,7 @@ export default defineComponent({
 			...preset.value,
 			...props.options,
 		}))
-		watch(computedOptions, options => writer.value.options.set(options))
+		watch(computedOptions, options => writer.value?.options.set(options))
 
 		/**
 		 * WRITE function
@@ -78,13 +70,13 @@ export default defineComponent({
 			if (props.pause) return
 
 			// For string text prop: simply write
-			if (typeof props.text === 'string') writer.value.write(props.text)
+			if (typeof props.text === 'string') writer.value?.write(props.text)
 			// For Array text prop:
 			// parse array items into strings
 			// and queue write that
 			else {
 				const texts = props.text.map(item => String(item))
-				writer.value.queueWrite(texts, queueInterval.value, queueLoop.value)
+				writer.value?.queueWrite(texts, queueInterval.value, queueLoop.value)
 			}
 		}
 		watch(() => props.text, write)
@@ -92,7 +84,7 @@ export default defineComponent({
 		// Pause and Play
 		watch(
 			() => props.pause,
-			pause => (pause ? writer.value.pause() : writer.value.play()),
+			pause => (pause ? writer.value?.pause() : writer.value?.play()),
 		)
 
 		/**
@@ -102,15 +94,9 @@ export default defineComponent({
 			// Set writer, after DOM is ready
 			writer.value = create(element.value, computedOptions.value)
 
-			writer.value.addCallback('step', (string, data) =>
-				emit('step', string, data),
-			)
-			writer.value.addCallback('start', (string, data) =>
-				emit('start', string, data),
-			)
-			writer.value.addCallback('finish', (string, data) =>
-				emit('finish', string, data),
-			)
+			writer.value.addCallback('step', (string, data) => emit('step', string, data))
+			writer.value.addCallback('start', (string, data) => emit('start', string, data))
+			writer.value.addCallback('finish', (string, data) => emit('finish', string, data))
 
 			// Write initial text if props.appear is true
 			writeOnAppear && write()
@@ -123,10 +109,7 @@ export default defineComponent({
 		 */
 		let initialText: string = ''
 		if (attrs.appear === undefined) {
-			const text =
-				typeof props.text === 'string'
-					? props.text
-					: String(props.text[0] ?? '')
+			const text = typeof props.text === 'string' ? props.text : String(props.text[0] ?? '')
 			initialText = computedOptions.value.html ? text : escapeHtml(text)
 		}
 
@@ -134,17 +117,19 @@ export default defineComponent({
 			writer,
 			element,
 			initialText,
+			classes,
 		}
 	},
+	render() {
+		return h(
+			this.tag,
+			{
+				class: this.classes,
+				ref: 'element',
+			},
+			this.initialText,
+		)
+	},
 })
-</script>
 
-<template>
-	<component
-		:is="tag"
-		ref="element"
-		v-html="initialText"
-		class="glitched-writer"
-		:class="{ 'gw-paused': pause }"
-	></component>
-</template>
+export default component

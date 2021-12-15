@@ -2,14 +2,16 @@
 import { defineComponent, ref } from 'vue'
 // import GlitchedWriter from '@/vue-glitched-writer.vue'
 // @ts-ignore
-import * as gw from '../dist/vue-glitched-writer.esm.js'
+// import * as gw from '../dist/vue-glitched-writer.esm.js'
+import GlitchedWriter from '../src/index'
 
-console.log(gw)
+// console.log(gw)
 
 export default defineComponent({
 	name: 'HelloWorld',
 	components: {
-		GlitchedWriter: gw.default,
+		// GlitchedWriter: gw.default,
+		GlitchedWriter,
 	},
 	setup() {
 		const paragraph = `
@@ -64,8 +66,6 @@ export default defineComponent({
 		<input class="input" v-model.lazy="inputText" />
 	</div>
 </template>
-
-<style lang="scss" src="./style.scss" />
 
 <style lang="scss">
 #app {
