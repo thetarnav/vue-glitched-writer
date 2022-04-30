@@ -49,11 +49,11 @@ import GlitchedWriter from 'https://cdn.skypack.dev/vue-glitched-writer'
 
 ```html
 <script>
-	export default {
-		components: {
-			GlitchedWriter,
-		},
-	}
+export default { 
+   components: {
+      GlitchedWriter, 
+   },
+}
 </script>
 ```
 
@@ -82,9 +82,9 @@ If you want to write texts for prepared array, then you can pass that array to a
 data() {
    return {
       phrases: [
-				'Hello and Welcome',
-				'What is this?!',
-				'It appears i\'m in some queue...',
+         'Hello and Welcome', 
+         'What is this?!',
+         'It appears i\'m in some queue...',
       ]
    }
 }
@@ -94,9 +94,9 @@ data() {
 <glitched-writer :text="phrases" />
 
 <!-- add prop "queue" to controll the queue -->
-<glitched-writer
-	:text="phrases"
-	:queue="{
+<glitched-writer 
+      :text="phrases"
+      :queue="{
       interval: 1200, // [ms]
       loop: true
       // false -> stop (default)
